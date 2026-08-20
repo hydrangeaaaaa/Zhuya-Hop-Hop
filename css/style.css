@@ -1,0 +1,139 @@
+:root {
+  color-scheme: light;
+  font-family: Arial, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #f4f0ea;
+  color: #332f2b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overscroll-behavior: none;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #f4f0ea;
+}
+
+.game-shell {
+  position: relative;
+  width: min(100vw, 1200px);
+  height: clamp(300px, 64svh, 520px);
+  overflow: hidden;
+  background: #fbfaf7;
+  border-top: 1px solid #e4ded7;
+  border-bottom: 1px solid #e4ded7;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.hud {
+  position: absolute;
+  z-index: 2;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  pointer-events: none;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: #4a4540;
+}
+
+.score-block {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 5px;
+  text-align: right;
+}
+
+.score-label {
+  color: #918982;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.score-number {
+  min-width: 5.4ch;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.sound-toggle {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid #cfc8c0;
+  border-radius: 50%;
+  background: rgba(251, 250, 247, 0.92);
+  color: #332f2b;
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sound-toggle:focus-visible {
+  outline: 2px solid #6e675f;
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 520px) {
+  .game-shell {
+    width: 100vw;
+    height: min(62svh, 520px);
+    min-height: 340px;
+  }
+
+  .hud {
+    top: max(10px, env(safe-area-inset-top));
+    right: max(10px, env(safe-area-inset-right));
+    gap: 11px;
+  }
+
+  .sound-toggle {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #game-canvas {
+    scroll-behavior: auto;
+  }
+}
+
