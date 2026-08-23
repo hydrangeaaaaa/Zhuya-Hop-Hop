@@ -100,6 +100,19 @@ body {
   outline-offset: 2px;
 }
 
+.watermark {
+  position: absolute;
+  z-index: 2;
+  right: max(10px, env(safe-area-inset-right));
+  bottom: max(9px, env(safe-area-inset-bottom));
+  width: 64px;
+  height: auto;
+  opacity: 0.48;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -129,6 +142,12 @@ body {
     width: 36px;
     height: 36px;
   }
+
+  .watermark {
+    right: max(9px, env(safe-area-inset-right));
+    bottom: max(8px, env(safe-area-inset-bottom));
+    width: 58px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -136,4 +155,3 @@ body {
     scroll-behavior: auto;
   }
 }
-
