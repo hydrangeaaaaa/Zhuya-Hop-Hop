@@ -1,4 +1,4 @@
-const CACHE_NAME = 'little-runner-v2';
+const CACHE_NAME = 'little-runner-v3';
 const APP_FILES = [
   './',
   './index.html',
@@ -12,6 +12,7 @@ const APP_FILES = [
   './assets/player/run_01.png',
   './assets/player/run_02.png',
   './assets/player/hit.png',
+  './assets/watermark.png',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
   './manifest.webmanifest',
@@ -37,4 +38,3 @@ self.addEventListener('fetch', (event) => {
     caches.match(event.request).then((cached) => cached || fetch(event.request)),
   );
 });
-
