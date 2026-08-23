@@ -33,15 +33,5 @@
     GAME_OVER_PAUSE: 0.42,
     MAX_DELTA_TIME: 0.033,
     DEBUG_HITBOX: false,
-
-    MUSIC_VOLUME: 0.018,
-    MUSIC_STEP_DURATION: 0.24,
-    MUSIC_NOTES: Object.freeze([
-      261.63, 329.63, 392.0, 329.63,
-      293.66, 349.23, 440.0, 349.23,
-      246.94, 293.66, 392.0, 293.66,
-      220.0, 261.63, 329.63, null,
-    ]),
   });
 })();
-
