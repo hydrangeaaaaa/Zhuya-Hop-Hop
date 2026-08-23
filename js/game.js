@@ -145,7 +145,7 @@
         return;
       }
 
-      this.audio.init();
+      this.audio.startMusic();
       if (this.mode === 'ready') {
         this.start();
         this.tryJump();
