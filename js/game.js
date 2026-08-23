@@ -145,7 +145,7 @@
         return;
       }
 
-      this.audio.startMusic();
+      this.audio.init();
       if (this.mode === 'ready') {
         this.start();
         this.tryJump();
@@ -329,4 +329,3 @@
     });
   }
 })();
-

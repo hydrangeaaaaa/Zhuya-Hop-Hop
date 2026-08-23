@@ -1,4 +1,4 @@
-const CACHE_NAME = 'little-runner-v3';
+const CACHE_NAME = 'little-runner-v4';
 const APP_FILES = [
   './',
   './index.html',
