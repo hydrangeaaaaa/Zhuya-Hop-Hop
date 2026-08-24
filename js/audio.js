@@ -5,6 +5,7 @@
     constructor(button) {
       this.button = button;
       this.context = null;
+      this.resumePromise = null;
       try {
         this.muted = localStorage.getItem('littleRunnerMuted') === 'true';
       } catch (_) {
@@ -18,36 +19,53 @@
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         if (AudioContext) this.context = new AudioContext();
       }
-      if (this.context && this.context.state === 'suspended') {
-        this.context.resume().catch(() => {});
+      if (!this.context) return Promise.resolve(false);
+      if (this.context.state === 'running') return Promise.resolve(true);
+      if (this.context.state === 'closed') return Promise.resolve(false);
+
+      if (!this.resumePromise) {
+        this.resumePromise = this.context
+          .resume()
+          .then(() => this.context.state === 'running')
+          .catch(() => false)
+          .finally(() => {
+            this.resumePromise = null;
+          });
       }
+      return this.resumePromise;
     }
 
     tone({ frequency, endFrequency, duration, type = 'sine', volume = 0.055 }) {
       if (this.muted) return;
-      this.init();
-      if (!this.context) return;
+      this.init().then((ready) => {
+        if (!ready || this.muted || !this.context) return;
 
-      const now = this.context.currentTime;
-      const oscillator = this.context.createOscillator();
-      const gain = this.context.createGain();
-      oscillator.type = type;
-      oscillator.frequency.setValueAtTime(frequency, now);
-      oscillator.frequency.exponentialRampToValueAtTime(endFrequency, now + duration);
-      gain.gain.setValueAtTime(volume, now);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-      oscillator.connect(gain);
-      gain.connect(this.context.destination);
-      oscillator.start(now);
-      oscillator.stop(now + duration);
+        const now = this.context.currentTime + 0.005;
+        const oscillator = this.context.createOscillator();
+        const gain = this.context.createGain();
+        oscillator.type = type;
+        oscillator.frequency.setValueAtTime(frequency, now);
+        oscillator.frequency.exponentialRampToValueAtTime(endFrequency, now + duration);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(volume, now + 0.008);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+        oscillator.connect(gain);
+        gain.connect(this.context.destination);
+        oscillator.onended = () => {
+          oscillator.disconnect();
+          gain.disconnect();
+        };
+        oscillator.start(now);
+        oscillator.stop(now + duration + 0.01);
+      });
     }
 
     jump() {
-      this.tone({ frequency: 330, endFrequency: 560, duration: 0.09, type: 'sine' });
+      this.tone({ frequency: 340, endFrequency: 680, duration: 0.13, type: 'sine', volume: 0.18 });
     }
 
     hit() {
-      this.tone({ frequency: 150, endFrequency: 58, duration: 0.22, type: 'triangle', volume: 0.075 });
+      this.tone({ frequency: 170, endFrequency: 52, duration: 0.28, type: 'triangle', volume: 0.24 });
     }
 
     toggle() {
@@ -72,3 +90,4 @@
 
   window.GameAudio = GameAudio;
 })();
+

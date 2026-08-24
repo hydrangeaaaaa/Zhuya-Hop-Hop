@@ -1,10 +1,10 @@
-const CACHE_NAME = 'little-runner-v4';
+const CACHE_NAME = 'little-runner-v5';
 const APP_FILES = [
   './',
   './index.html',
   './css/style.css',
   './js/config.js',
-  './js/audio.js',
+  './js/audio.js?v=5',
   './js/player.js',
   './js/obstacles.js',
   './js/game.js',
@@ -38,3 +38,4 @@ self.addEventListener('fetch', (event) => {
     caches.match(event.request).then((cached) => cached || fetch(event.request)),
   );
 });
+
