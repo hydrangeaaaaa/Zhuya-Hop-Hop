@@ -1,10 +1,10 @@
-const CACHE_NAME = 'little-runner-v5';
+const CACHE_NAME = 'little-runner-v6';
 const APP_FILES = [
   './',
   './index.html',
   './css/style.css',
   './js/config.js',
-  './js/audio.js?v=5',
+  './js/audio.js?v=6',
   './js/player.js',
   './js/obstacles.js',
   './js/game.js',
